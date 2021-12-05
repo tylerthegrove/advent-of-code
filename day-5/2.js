@@ -11,7 +11,7 @@ const numbers = importFile('./numbers.txt').split(",");
 // const bingo = importFile('./demo.txt').split("\n").filter(val => val !== "");
 // const numbers = importFile('./demoNums.txt').split(",");
 
-const boards = chunk(bingo, 5).map(board => board.reduce((acc, row) => {
+let boards = chunk(bingo, 5).map(board => board.reduce((acc, row) => {
     return [...acc, row.split(" ").filter(val => val !== "")]
 },[] ));
 
@@ -37,6 +37,7 @@ function addUncalled(board, nums) {
 
 let match = null;
 let called = [];
+let winners = [];
 numbers.forEach(num => {
     if (match){return;}
     called.push(num);
@@ -52,20 +53,15 @@ numbers.forEach(num => {
                 }
     
             });
-            if (matches[boardIndex].columns.includes(5) && !match) {
-                const column = matches[boardIndex].columns.indexOf(5);
-                console.log(board);
-                match = true;
-                console.log(addUncalled(board, called) * num);
-                console.log(`bingo on board:${boardIndex} column:${column} number:${num}`)
-
-            }
-            if (matches[boardIndex].rows.includes(5) && !match) {
-                console.log(board.flat())
-                const row = matches[boardIndex].rows.indexOf(5);
-                match=true;
-                console.log(addUncalled(board, called) * num);
-                console.log(`bingo on board:${boardIndex} row:${row} number:${num}`)
+            if (matches[boardIndex].columns.includes(5) || matches[boardIndex].rows.includes(5) ) {
+                    if (!winners.includes(boardIndex) && winners.length < boards.length - 1) {
+                        winners.push(boardIndex)
+                    }
+                
+                    if (!winners.includes(boardIndex)) {
+                        match = true;
+                        console.log(addUncalled(board, called) * num);
+                    }
             }
     })
 });

@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/tylerthegrove/advent-of-code#readme",
   "dependencies": {
+    "lodash.chunk": "^4.2.0",
     "node-fetch": "^3.1.0"
   }
 }
