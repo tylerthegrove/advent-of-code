@@ -41,7 +41,7 @@ dataObj.forEach(obj => {
 console.log(answer1)
 
 
-const numValid = (low, high) => num => +num >= low && +num <= high;
+const numValid = (low, high) => num => parseInt(num) >= low && parseInt(num) <= high;
 const digitValid = digits => num => num.toString().length === digits;
 
 const byr = (num) => digitValid(4)(num) && numValid(1920, 2002)(num);
@@ -92,13 +92,19 @@ const validators = {
 let answer2 = 0;
 
 dataObj.forEach(obj => {
+
+    
     if (Object.keys(obj).length === 8 || (Object.keys(obj).length === 7 && !obj.cid)) {
+        //console.log(`testing ${JSON.stringify(obj)}`)
         for (const property in obj) {
             if (!validators[property](obj[property])) {
                 //console.log(`invalid ${property} ${obj[property]}`)
                 return;
             }
-            //console.log(`valid ${property} ${obj[property]}`)
+            if(property === "hcl") {
+                console.log(`valid ${property} ${obj[property]}`)
+            }
+            
 
         }
         answer2 += 1;
@@ -108,5 +114,3 @@ dataObj.forEach(obj => {
 })
 
 console.log(answer2)
-
-byr, iyr, eyr
